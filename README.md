@@ -2,6 +2,12 @@
 
 按顺序选择亲属关系，查询“我称呼对方”或“对方称呼我”。基于 React、TypeScript、Vite 和 MIT 许可的 relationship.js，纯静态前端，无后端和在线计算服务。
 
+## 在线使用
+
+网站地址：[https://33skrr.github.io/RelativeCalculator/](https://33skrr.github.io/RelativeCalculator/)。手机或电脑浏览器都可访问，无需安装，也无需运行本地服务。
+
+GitHub Pages 通过 `.github/workflows/deploy-pages.yml` 自动部署。每次推送到 `main`，GitHub Actions 会安装依赖、运行测试、构建并发布 `dist`；测试或构建失败时不会发布新版本。也可在 Actions 页面手动运行 “Deploy to GitHub Pages”。仓库 Settings → Pages 的部署来源使用 GitHub Actions。
+
 ## 本地运行
 
 使用 Node.js 24.14+（或满足 Vite 8 要求的版本）。
