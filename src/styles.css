@@ -1,0 +1,52 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: #161616;
+  background: #ebebed;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --accent: #e7a336;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+button { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button:focus-visible { outline: 3px solid #7d510c; outline-offset: 3px; }
+button:disabled { cursor: default; }
+
+.calculator {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: max(24px, env(safe-area-inset-top)) 10px max(30px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+}
+.gender-row { display: flex; align-items: center; gap: 8px; color: #737373; font-size: 17px; }
+.gender-options { display: flex; gap: 4px; padding: 4px; border-radius: 4px; background: #dededf; }
+.gender-options button { min-width: 56px; min-height: 48px; padding: 6px 10px; border: 0; border-radius: 4px; color: #727272; background: transparent; }
+.gender-options button[aria-pressed="true"] { background: var(--accent); color: white; }
+.display { flex: 1; min-height: 230px; display: flex; flex-direction: column; justify-content: center; padding: 24px 8px; text-align: right; }
+.chain { margin: 0; font-size: 21px; line-height: 1.65; color: #747474; overflow-wrap: anywhere; }
+.answer { margin-top: 16px; font-size: 38px; line-height: 1.45; overflow-wrap: anywhere; }
+.answer:empty { margin-top: 0; }
+.answer-error { font-size: 20px; color: #805514; }
+.direction { margin: 0 0 9px; font-size: 16px; line-height: 1.5; color: #727272; }
+.keypad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.key { min-width: 0; min-height: 64px; aspect-ratio: 1; border: 0; border-radius: 12px; background: #fff; color: #161616; font-size: clamp(19px, 5.15vw, 25px); padding: 8px 0; }
+.key-wide { grid-column: span 2; aspect-ratio: auto; }
+.key-action { color: #ba791b; }
+.key-equals { background: var(--accent); color: #fff; font-size: 45px; line-height: 1; font-weight: 600; }
+.key:disabled { background: #f7f7f9; color: #bdbdbf; }
+@media (hover: hover) {
+  .key:hover:not(:disabled) { filter: brightness(.97); }
+}
+.key:active:not(:disabled) { transform: scale(.97); }
+@media (prefers-reduced-motion: no-preference) {
+  .key { transition: transform 100ms ease, filter 100ms ease; }
+}
+@media (max-height: 600px) {
+  .calculator { padding-top: 12px; padding-bottom: 16px; }
+  .display { min-height: 130px; padding-block: 12px; }
+}
