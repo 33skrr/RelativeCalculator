@@ -12,7 +12,8 @@ test('计算、反向、性别、编辑和重置完整流程，无浏览器错�
     if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
   });
   await page.goto('/');
-  await expect(page.getByRole('button', { name: '老婆', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: '老公', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: '老婆', exact: true })).toBeEnabled();
   await click(page, '爸爸', '哥哥');
   await expect(page.getByRole('status')).toBeEmpty();
   await click(page, '计算');
@@ -22,7 +23,8 @@ test('计算、反向、性别、编辑和重置完整流程，无浏览器错�
   await click(page, '女生');
   await expect(page.getByRole('status')).toHaveText('侄女');
   await expect(page.getByLabel('关系链')).toHaveText('爸爸的哥哥');
-  await expect(page.getByRole('button', { name: '老公', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: '老婆', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: '老公', exact: true })).toBeEnabled();
   await click(page, '切换');
   await expect(page.getByRole('status')).toHaveText('伯父');
   await page.screenshot({ path: 'artifacts/mobile-calculated.png', fullPage: true });
@@ -45,20 +47,20 @@ test('长幼不明保留候选，无效关系有提示', async ({ page }) => {
   await page.goto('/');
   await click(page, '妈妈', '姐姐', '女儿', '计算');
   await expect(page.getByRole('status')).toHaveText('表姐 / 表妹');
-  await click(page, '重置', '爸爸', '老公', '计算');
+  await click(page, '重置', '女生', '爸爸', '老公', '计算');
   await expect(page.getByRole('status')).toHaveText('暂未找到对应称呼，请检查关系');
 });
 
 test('每个亲属按键可输入，性别禁用独立于链末端', async ({ page }) => {
   await page.goto('/');
-  for (const label of ['爸爸', '妈妈', '老公', '哥哥', '弟弟', '姐姐', '妹妹', '儿子', '女儿']) {
+  for (const label of ['爸爸', '妈妈', '老婆', '哥哥', '弟弟', '姐姐', '妹妹', '儿子', '女儿']) {
     await click(page, '重置', label);
     await expect(page.getByLabel('关系链')).toHaveText(label);
   }
   await click(page, '重置', '妈妈');
-  await expect(page.getByRole('button', { name: '老婆', exact: true })).toBeDisabled();
-  await click(page, '女生', '老婆');
-  await expect(page.getByLabel('关系链')).toHaveText('妈妈的老婆');
+  await expect(page.getByRole('button', { name: '老公', exact: true })).toBeDisabled();
+  await click(page, '女生', '老公');
+  await expect(page.getByLabel('关系链')).toHaveText('妈妈的老公');
 });
 
 test('键盘可以选择性别、输入并计算，禁用键不会聚焦', async ({ page }) => {
@@ -72,7 +74,9 @@ test('键盘可以选择性别、输入并计算，禁用键不会聚焦', async
   await page.keyboard.press('Enter');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
-  await expect(page.getByRole('button', { name: '老婆', exact: true })).toBeFocused();
+  await expect(page.getByRole('button', { name: '老公', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: '哥哥', exact: true })).toBeFocused();
   await page.getByRole('button', { name: '计算', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('status')).toHaveText('爸爸');

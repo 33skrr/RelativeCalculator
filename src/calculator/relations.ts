@@ -20,7 +20,6 @@ export function formatChain(chain: readonly RelationId[]): string {
 }
 
 export function isRelationDisabled(relation: RelationId, gender: Gender): boolean {
-  // This pairing intentionally follows the requested UI rule, not genealogy.
-  return (gender === 'female' && relation === 'husband') ||
-    (gender === 'male' && relation === 'wife');
+  return (gender === 'female' && relation === 'wife') ||
+    (gender === 'male' && relation === 'husband');
 }

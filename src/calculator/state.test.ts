@@ -4,21 +4,21 @@ import { formatChain, isRelationDisabled } from './relations';
 
 describe('用户指定的性别联动', () => {
   it.each([
-    ['female', 'husband', true], ['female', 'wife', false],
-    ['male', 'wife', true], ['male', 'husband', false],
+    ['female', 'wife', true], ['female', 'husband', false],
+    ['male', 'husband', true], ['male', 'wife', false],
     ['male', 'mother', false], ['female', 'father', false],
   ] as const)('%s / %s 禁用为 %s', (gender, relation, disabled) => {
     expect(isRelationDisabled(relation, gender)).toBe(disabled);
   });
   it('切换性别立即改变禁用状态，不能添加被禁用的关系', () => {
     const female = calculatorReducer(initialState, { type: 'setGender', gender: 'female' });
-    expect(calculatorReducer(female, { type: 'append', relation: 'husband' }).chain).toEqual([]);
-    expect(calculatorReducer(female, { type: 'append', relation: 'wife' }).chain).toEqual(['wife']);
+    expect(calculatorReducer(female, { type: 'append', relation: 'wife' }).chain).toEqual([]);
+    expect(calculatorReducer(female, { type: 'append', relation: 'husband' }).chain).toEqual(['husband']);
   });
   it('禁用只关联顶部性别，不关联链末端', () => {
     const mother = calculatorReducer(initialState, { type: 'append', relation: 'mother' });
-    expect(calculatorReducer(mother, { type: 'append', relation: 'wife' }).chain).toEqual(['mother']);
-    expect(calculatorReducer(mother, { type: 'append', relation: 'husband' }).chain).toEqual(['mother', 'husband']);
+    expect(calculatorReducer(mother, { type: 'append', relation: 'husband' }).chain).toEqual(['mother']);
+    expect(calculatorReducer(mother, { type: 'append', relation: 'wife' }).chain).toEqual(['mother', 'wife']);
   });
 });
 

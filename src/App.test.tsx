@@ -16,12 +16,13 @@ describe('亲戚计算器', () => {
   it('性别按钮联动原生禁用态，输入不改变顶部规则', async () => {
     const { click } = setup();
     expect(screen.getByRole('button', { name: '男生' })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: '老婆' })).toBeDisabled();
-    await click('妈妈');
-    expect(screen.getByRole('button', { name: '老婆' })).toBeDisabled();
-    await click('女生');
     expect(screen.getByRole('button', { name: '老公' })).toBeDisabled();
     expect(screen.getByRole('button', { name: '老婆' })).toBeEnabled();
+    await click('妈妈');
+    expect(screen.getByRole('button', { name: '老公' })).toBeDisabled();
+    await click('女生');
+    expect(screen.getByRole('button', { name: '老婆' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '老公' })).toBeEnabled();
     expect(screen.getByLabelText('关系链')).toHaveTextContent('妈妈');
   });
   it('按等号才计算，反向和更改性别立即重算但保留原链', async () => {
@@ -57,7 +58,7 @@ describe('亲戚计算器', () => {
     const { click } = setup();
     await click('妈妈', '姐姐', '女儿', '计算');
     expect(screen.getByRole('status')).toHaveTextContent('表姐 / 表妹');
-    await click('重置', '爸爸', '老公', '计算');
+    await click('重置', '女生', '爸爸', '老公', '计算');
     expect(screen.getByRole('status')).toHaveTextContent('暂未找到对应称呼，请检查关系');
   });
 });

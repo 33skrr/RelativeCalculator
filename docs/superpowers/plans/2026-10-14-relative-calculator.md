@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 女生禁用“老公”、男生禁用“老婆”；仅关联顶部性别，不随链末端人物改变。
+- 男生禁用“老公”、女生禁用“老婆”（2026-10-15 更正）；仅关联顶部性别，不随链末端人物改变。
 - “切换”仅切换称呼方向，保留从“我”出发的原始关系链。
 - 去掉祝福语、AI计算、关系、设置、历史及手机系统状态栏。
 - 浅灰底、白色圆角键、橙黄色强调；四列网格，“切换”和“＝”各占两格。
@@ -51,9 +51,9 @@ expect(calculate([], 'female', 'forward').names).toEqual(['自己']);
 - [x] Write state/disabled tests before reducer:
 
 ```ts
-expect(isRelationDisabled('husband', 'female')).toBe(true);
-expect(isRelationDisabled('wife', 'male')).toBe(true);
-expect(isRelationDisabled('husband', 'male')).toBe(false);
+expect(isRelationDisabled('husband', 'male')).toBe(true);
+expect(isRelationDisabled('wife', 'female')).toBe(true);
+expect(isRelationDisabled('husband', 'female')).toBe(false);
 const s = { gender: 'male', chain: ['father'], direction: 'forward', calculated: true } as const;
 expect(calculatorReducer(s, { type: 'toggleDirection' }).chain).toEqual(['father']);
 expect(calculatorReducer(s, { type: 'append', relation: 'mother' }).calculated).toBe(false);
@@ -65,7 +65,7 @@ expect(calculatorReducer(s, { type: 'append', relation: 'mother' }).calculated).
 
 Consumes domain API. Produces default `App` and Vite entry.
 
-- [x] Write real Testing Library flows before UI implementation: male disables 老婆, female disables 老公; 爸爸→哥哥→＝ shows 伯父; female reverse shows 侄女 and keeps chain; backspace clears result; reset preserves female and restores forward; sex change after reverse updates result.
+- [x] Write real Testing Library flows before UI implementation: male disables 老公, female disables 老婆; 爸爸→哥哥→＝ shows 伯父; female reverse shows 侄女 and keeps chain; backspace clears result; reset preserves female and restores forward; sex change after reverse updates result.
 - [x] Run UI tests red. Implement semantic input/result/keyboard regions, native disabled buttons, `aria-pressed` gender choices, polite announcements and visible focus.
 - [x] Style `#ebebed` background, white rounded keys, screenshot-matched `#e7a336` accent, muted disabled keys; four-column grid and double-width switch/equals. Use flexible display space, `100svh`, safe-area padding, max desktop width, short-screen scroll, minimum 48px targets. No decorative assets.
 - [x] Run `npm test`, `npm run typecheck`, `npm run build` green.
